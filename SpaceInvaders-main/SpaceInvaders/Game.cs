@@ -34,6 +34,21 @@ namespace SpaceInvaders
         {
             pendingNewGameObjects.Add(gameObject);
         }
+
+        public EnemyBlock enemies;
+        public PlayerSpaceship playerSpaceShip;
+        
+        public enum GameState
+        {
+            Play,
+            Pause
+        }
+        public GameState state = GameState.Play;
+        public Bunker b1;
+        public Bunker b2;
+        public Bunker b3;
+
+
         #endregion
 
         #region game technical elements
@@ -88,7 +103,51 @@ namespace SpaceInvaders
         /// <param name="gameSize">Size of the game area</param>
         private Game(Size gameSize)
         {
+            Vecteur2D pos = new Vecteur2D(265, 550);
+            Bitmap img = SpaceInvaders.Properties.Resources.ship3;
+            this.playerSpaceShip = new PlayerSpaceship(pos, 3, img);
+
             this.gameSize = gameSize;
+            gameObjects.Add(playerSpaceShip);
+
+            Bitmap imgB = SpaceInvaders.Properties.Resources.bunker;
+            Bitmap imgB2 = SpaceInvaders.Properties.Resources.bunker;
+            Bitmap imgB3 = SpaceInvaders.Properties.Resources.bunker;
+            Vecteur2D posB = new Vecteur2D(50, 480);
+            Vecteur2D posB2 = new Vecteur2D(250, 480);
+            Vecteur2D posB3 = new Vecteur2D(450, 480);
+
+            this.b1 = new Bunker(posB, 300, imgB);
+            this.b2 = new Bunker(posB2, 300, imgB2);
+            this.b3 = new Bunker(posB3, 300, imgB3);
+            gameObjects.Add(b1);
+            gameObjects.Add(b2);
+            gameObjects.Add(b3);
+
+            Vecteur2D posEnemies = new Vecteur2D(70,0);
+            enemies = new EnemyBlock(posEnemies, gameSize.Width);
+
+            Bitmap imgEnemies = SpaceInvaders.Properties.Resources.ship1;
+            enemies.AddLine(5, 1, imgEnemies);
+           
+
+            Bitmap imgEnemies2 = SpaceInvaders.Properties.Resources.ship5;
+            enemies.AddLine(9, 1, imgEnemies2);
+
+            Bitmap imgEnemies3 = SpaceInvaders.Properties.Resources.ship7;
+            enemies.AddLine(5, 1, imgEnemies3);
+
+
+            Bitmap imgEnemies4 = SpaceInvaders.Properties.Resources.ship8;
+            enemies.AddLine(9, 1, imgEnemies2);
+            Bitmap imgEnemies5 = SpaceInvaders.Properties.Resources.ship4;
+            enemies.AddLine(5, 1, imgEnemies5);
+
+
+
+
+            gameObjects.Add(enemies);
+
         }
 
         #endregion
@@ -112,8 +171,21 @@ namespace SpaceInvaders
         /// <param name="g">Graphics to draw in</param>
         public void Draw(Graphics g)
         {
-            foreach (GameObject gameObject in gameObjects)
-                gameObject.Draw(this, g);       
+            Font drawFont = new Font("Arial", 16);
+            SolidBrush drawBrush = new SolidBrush(Color.Black);
+            float x = 255f;
+            float y = 255f;
+            if (state == GameState.Pause)
+            {
+               
+                g.DrawString("PAUSE", defaultFont,drawBrush,x,y);
+            }
+            else
+            {
+               
+                foreach (GameObject gameObject in gameObjects)
+                    gameObject.Draw(this, g);
+            }
         }
 
         /// <summary>
@@ -127,18 +199,31 @@ namespace SpaceInvaders
 
 
             // if space is pressed
-            if (keyPressed.Contains(Keys.Space))
+            if (keyPressed.Contains(Keys.P))
             {
+                if (state == GameState.Play)
+                {
+
+                    state = GameState.Pause;
+                   
+
+                }
+                else
+                {
+                    state = GameState.Play;
+                   
+                }
+                ReleaseKey(Keys.P);
                 // create new BalleQuiTombe
-                GameObject newObject = new BalleQuiTombe(gameSize.Width / 2, 0);
+                //GameObject newObject = new BalleQuiTombe(gameSize.Width / 2, 0);
                 // add it to the game
-                AddNewGameObject(newObject);
+                // AddNewGameObject(newObject);
                 // release key space (no autofire)
-                ReleaseKey(Keys.Space);
+                //ReleaseKey(Keys.Space);
             }
 
             // update each game object
-            foreach (GameObject gameObject in gameObjects)
+            foreach (GameObject gameObject in gameObjects.ToList())
             {
                 gameObject.Update(this, deltaT);
             }

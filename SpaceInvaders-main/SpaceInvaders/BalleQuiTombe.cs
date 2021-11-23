@@ -47,6 +47,11 @@ namespace SpaceInvaders
             this.x = x;
             this.y = y;
         }
+        public override bool EnCollision(Missile m)
+        {
+            return true;
+        }
+       
         #endregion
 
         #region Methods
