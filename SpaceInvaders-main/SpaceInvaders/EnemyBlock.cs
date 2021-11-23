@@ -43,8 +43,8 @@ namespace SpaceInvaders
             for (int i = 0; i < nbShips; i++)
             {
                 Vecteur2D p = new Vecteur2D((Position.x+(baseWidth/nbShips)/2*i ), PositionY );
-                
-                SpaceShip sp = new SpaceShip(p, nbLives,shipImage);
+                Bitmap b = shipImage;
+                SpaceShip sp = new SpaceShip(p, nbLives,b);
                 enemyShips.Add(sp);
                
             }
@@ -62,28 +62,37 @@ namespace SpaceInvaders
         {
             foreach(SpaceShip sp in enemyShips)
             {
-                graphics.DrawImage(sp.Image, (float)sp.Position.x, (float)sp.Position.y, sp.Image.Width, sp.Image.Height);
+                if (sp.IsAlive())
+                {
+
+                    graphics.DrawImage(sp.Image, (float)sp.Position.x, (float)sp.Position.y, sp.Image.Width, sp.Image.Height);
+                }
             }
             
         }
 
-        public override bool EnCollision(Missile m)
+        public override bool Collision(Missile m)
         {
             foreach (SpaceShip sp in enemyShips)
             {
 
-                if (sp.EnCollision(m))
+                if (sp.Collision(m) )
                 {
+                    Console.WriteLine(sp.ToString()+" est mort : " +sp.Lives);
                     sp.Lives = 0;
+                    m.Lives = 0;
+                    
                     
                 }
             }
             if (IsAlive())
             {
+                
                 return true;
             }
             return false;
         }
+       
 
         public override bool IsAlive()
         {
@@ -105,20 +114,30 @@ namespace SpaceInvaders
 
         public override void Update(Game gameInstance, double deltaT)
         {
+            if (IsAlive())
+            {
 
-                
-                go(direction,vitesse);
-                
+                go(direction, vitesse);
+
                 if (enemyShips.Last().Position.x >= 560 || enemyShips.First().Position.x <= 10)
                 {
                     Console.WriteLine("touche");
                     goDown();
-                    direction*= -1;
-                    vitesse+=0.2; 
+                    direction *= -1;
+                    vitesse += 0.2;
                 }
-                
-           
 
+                foreach (GameObject obj in gameInstance.gameObjects.ToList())
+                {
+                    if (obj is Missile)
+                    {
+                        Missile m = (Missile)obj;
+                        Collision(m);
+                    }
+                }
+
+
+            }
         }
         private void go(int x, double vitesse)
         {
@@ -147,9 +166,6 @@ namespace SpaceInvaders
                 sp.Position.y += 20;
             }
         }
-        private double Inverse(double x)
-        {
-            return  -x;
-        }
+        
     }
 }

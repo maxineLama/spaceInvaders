@@ -31,7 +31,10 @@ namespace SpaceInvaders
 
         public override void Draw(Game gameInstance, Graphics graphics)
         {
-            base.Draw(gameInstance, graphics);
+            if (IsAlive())
+            {
+                base.Draw(gameInstance, graphics);
+            }
         }
 
         public override bool IsAlive()
@@ -50,42 +53,40 @@ namespace SpaceInvaders
 
 
             }
-            
-            
+
+           
                 foreach (GameObject obj in gameInstance.gameObjects.ToList())
                 {
-                    
-                    if(obj.EnCollision(this) && obj is Bunker)
+
+                    if (obj.Collision(this) && obj is Bunker)
                     {
 
-                    Bunker b = (Bunker)obj;
-                    b.CollisionParPixel(this);
+                        Bunker b = (Bunker)obj;
+                        b.CollisionParPixel(this);
 
-                    break;
+                        break;
 
                     }
-                     if ( obj is EnemyBlock)
-                       {
+                    if (obj is EnemyBlock)
+                    {
                         EnemyBlock e = (EnemyBlock)obj;
-                        e.EnCollision(this);
+                        e.Collision(this);
                         break;
-                       }
+                    }
                 }
-                
+            if (IsAlive())
+            {
                 Position.y -= Vitesse * deltaT;
-                
-             
-                 
-  
-               
 
-   
-           
+            }
 
-
-
-
-
+        }
+        protected override void OnCollision(Missile m, int numberOfPixelsInCollision)
+        {
+            if (m != null || !(m.IsAlive()))
+            {
+                Lives = 0;
+            }
         }
     }
 }

@@ -52,9 +52,22 @@ namespace SpaceInvaders
 
 
         }
-        public override bool EnCollision(Missile m)
+        public override bool Collision(Missile m)
         {
-            return base.EnCollision(m);
+            return base.Collision(m);
+        }
+
+        protected override void OnCollision(Missile m, int numberOfPixelsInCollision)
+        {
+             
+                Lives -= numberOfPixelsInCollision;
+           
+                if  (missile!=null){
+                    missile.Lives = 0;
+                }
+            
+            
+        
         }
 
 

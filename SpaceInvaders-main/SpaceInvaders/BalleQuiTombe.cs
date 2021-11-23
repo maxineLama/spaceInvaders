@@ -47,7 +47,7 @@ namespace SpaceInvaders
             this.x = x;
             this.y = y;
         }
-        public override bool EnCollision(Missile m)
+        public override bool Collision(Missile m)
         {
             return true;
         }

@@ -22,51 +22,56 @@ namespace SpaceInvaders
 			
 
         }
-        public override bool EnCollision(Missile m)
+        public override bool Collision(Missile m)
         {
 			
 
-			return base.EnCollision(m);
+			return base.Collision(m);
 		}
 
 		public void CollisionParPixel(Missile m)
 		{
-			
-			int x = 0,y = 0;
-			int etat = 0;
-			for (int i = 0; i < m.Image.Width; i++)
+			if (Collision(m))
 			{
-				for (int j = 0; j < m.Image.Height; j++)
+				int x = 0, y = 0;
+				int etat = 0;
+				for (int i = 0; i < m.Image.Width; i++)
 				{
-					
-
-					 x = i + (int)m.Position.x - (int)Position.x;
-					y = j + (int)m.Position.y - (int)Position.y;
-					if (x >= 0 && x < Image.Width && y >= 0 && y < Image.Height)
+					for (int j = 0; j < m.Image.Height; j++)
 					{
-						Console.WriteLine("bonne zone");
-						Color pixel = Image.GetPixel(x, y);
-						// si pixel noir tu le met blanc et tu tues le missile
-						if (pixel.A == 255 && pixel.R == 0 && pixel.G == 0 && pixel.B == 0)
+
+
+						x = i + (int)m.Position.x - (int)Position.x;
+						y = j + (int)m.Position.y - (int)Position.y;
+						if (x >= 0 && x < Image.Width && y >= 0 && y < Image.Height)
 						{
-							Console.WriteLine("supp pixel");
-							Image.SetPixel(x, y, Color.White);
-							m.Lives = 0;
-							Lives--;
+							Console.WriteLine("bonne zone");
+							Color pixel = Image.GetPixel(x, y);
+							// si pixel noir tu le met blanc et tu tues le missile
+							if (pixel.A == 255 && pixel.R == 0 && pixel.G == 0 && pixel.B == 0)
+							{
+								Console.WriteLine("supp pixel");
+								Image.SetPixel(x, y, Color.White);
+								m.Lives = 0;
+								Lives--;
+							}
+
 						}
 
 					}
 
 				}
 
-			}
-           
-				
+			}	
 
 		}
-				
-			
-			
-		
+		protected override void OnCollision(Missile m, int numberOfPixelsInCollision)
+        {
+			Lives -= numberOfPixelsInCollision;
+        }
+
+
+
+
 	}
 }

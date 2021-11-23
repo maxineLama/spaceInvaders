@@ -26,8 +26,9 @@ namespace SpaceInvaders
             set;
         }
 
-        public override bool EnCollision(Missile m)
+        public override bool Collision(Missile m)
         {
+            int nbCol = 0; ;
             if (this.IsAlive() && m.IsAlive() && this != m)
             {
                 double obj_posX = this.Position.x;
@@ -47,10 +48,14 @@ namespace SpaceInvaders
 
                     if (m.Position.x >= Position.x && m.Position.x <= Position.x + Image.Width)
                     {
-
-                        return true;
+                        nbCol++;
                     }
 
+            }
+            if (nbCol > 0)
+            {
+                OnCollision(m, nbCol);
+                return true;
             }
 
             return false;
@@ -76,6 +81,7 @@ namespace SpaceInvaders
             return false;
         }
 
+        protected abstract void OnCollision(Missile m, int numberOfPixelsInCollision);
 
 
 
