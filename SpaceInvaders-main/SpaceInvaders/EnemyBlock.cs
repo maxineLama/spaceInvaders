@@ -22,12 +22,18 @@ namespace SpaceInvaders
             get;
             set;
         }
+        double PositionY;
+        int direction;
+        double vitesse;
         public EnemyBlock(Vecteur2D pos, int baseWidth)
         {
             this.Position = pos;
+            this.PositionY = Position.y;
             this.baseWidth = baseWidth;
             enemyShips = new HashSet<SpaceShip>();
             size = new Size(0, 0);
+            direction = 1;
+            vitesse = 0.1;
             
         }
         public void AddLine(int nbShips, int nbLives, Bitmap shipImage)
@@ -36,13 +42,13 @@ namespace SpaceInvaders
 
             for (int i = 0; i < nbShips; i++)
             {
-                Vecteur2D p = new Vecteur2D(Position.x+(baseWidth/nbShips)/2*i, Position.y );
+                Vecteur2D p = new Vecteur2D((Position.x+(baseWidth/nbShips)/2*i ), PositionY );
                 
                 SpaceShip sp = new SpaceShip(p, nbLives,shipImage);
                 enemyShips.Add(sp);
                
             }
-            UpdateSize();
+            PositionY += shipImage.Height + 2;
 
         }
         public void UpdateSize()
@@ -95,20 +101,55 @@ namespace SpaceInvaders
             }
             return false;
         }
+        
 
         public override void Update(Game gameInstance, double deltaT)
         {
 
-            foreach (SpaceShip sp in enemyShips)
-            {
-                sp.Position.x += 1;
-
-                if (Position.x == gameInstance.gameSize.Width - 10)
+                
+                go(direction,vitesse);
+                
+                if (enemyShips.Last().Position.x >= 560 || enemyShips.First().Position.x <= 10)
                 {
-                    Position.y += 1000;
+                    Console.WriteLine("touche");
+                    goDown();
+                    direction*= -1;
+                    vitesse+=0.2; 
+                }
+                
+           
+
+        }
+        private void go(int x, double vitesse)
+        {
+            if (x == 1)
+            {
+                foreach (SpaceShip sp in enemyShips)
+                {
+                    sp.Position.x += 0.1+ vitesse/2;
                 }
             }
+            else
+            {
 
+                foreach (SpaceShip sp in enemyShips)
+                {
+                    sp.Position.x -= 0.1+ vitesse/2;
+                }
+
+            }
+        }
+       
+        private void goDown()
+        {
+            foreach (SpaceShip sp in enemyShips)
+            {
+                sp.Position.y += 20;
+            }
+        }
+        private double Inverse(double x)
+        {
+            return  -x;
         }
     }
 }

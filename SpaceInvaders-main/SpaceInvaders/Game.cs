@@ -124,7 +124,7 @@ namespace SpaceInvaders
             gameObjects.Add(b2);
             gameObjects.Add(b3);
 
-            Vecteur2D posEnemies = new Vecteur2D(70,0);
+            Vecteur2D posEnemies = new Vecteur2D(15,0);
             enemies = new EnemyBlock(posEnemies, gameSize.Width);
 
             Bitmap imgEnemies = SpaceInvaders.Properties.Resources.ship1;
@@ -139,7 +139,7 @@ namespace SpaceInvaders
 
 
             Bitmap imgEnemies4 = SpaceInvaders.Properties.Resources.ship8;
-            enemies.AddLine(9, 1, imgEnemies2);
+            enemies.AddLine(9, 1, imgEnemies4);
             Bitmap imgEnemies5 = SpaceInvaders.Properties.Resources.ship4;
             enemies.AddLine(5, 1, imgEnemies5);
 
