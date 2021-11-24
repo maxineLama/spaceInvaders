@@ -117,14 +117,14 @@ namespace SpaceInvaders
             Vecteur2D posB2 = new Vecteur2D(250, 480);
             Vecteur2D posB3 = new Vecteur2D(450, 480);
 
-            this.b1 = new Bunker(posB, 300, imgB);
-            this.b2 = new Bunker(posB2, 300, imgB2);
-            this.b3 = new Bunker(posB3, 300, imgB3);
+            this.b1 = new Bunker(posB, 860, imgB);
+            this.b2 = new Bunker(posB2, 860, imgB2);
+            this.b3 = new Bunker(posB3, 860, imgB3);
             gameObjects.Add(b1);
             gameObjects.Add(b2);
             gameObjects.Add(b3);
 
-            Vecteur2D posEnemies = new Vecteur2D(15,0);
+            Vecteur2D posEnemies = new Vecteur2D(15,20);
             enemies = new EnemyBlock(posEnemies, gameSize.Width);
 
             Bitmap imgEnemies = SpaceInvaders.Properties.Resources.ship1;

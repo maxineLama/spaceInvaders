@@ -1,4 +1,5 @@
-﻿using System.Drawing;
+﻿using System;
+using System.Drawing;
 
 
 /// <summary>
@@ -8,6 +9,10 @@ namespace SpaceInvaders
 {
     abstract class SimpleObject : GameObject
     {
+        public SimpleObject(Side s) : base(s)
+        {
+            
+        }
         public Vecteur2D Position
         {
             get;
@@ -28,8 +33,9 @@ namespace SpaceInvaders
 
         public override bool Collision(Missile m)
         {
+           
             int nbCol = 0; ;
-            if (this.IsAlive() && m.IsAlive() && this != m)
+            if (this.IsAlive() && m.IsAlive() && this != m )
             {
                 double obj_posX = this.Position.x;
                 double obj_posY = this.Position.y;
@@ -52,9 +58,19 @@ namespace SpaceInvaders
                     }
 
             }
-            if (nbCol > 0)
+           
+           
+            if (nbCol > 0 )
             {
+                if (this.side == (m.side))
+                {
+                    Console.WriteLine("missile " + m.side + " obj " + this.side);
+                    m.OnCollision(m, nbCol);
+
+                    return false;
+                }
                 OnCollision(m, nbCol);
+                Console.WriteLine("missile " + m.side + " obj " + this.side);
                 return true;
             }
 
@@ -80,6 +96,8 @@ namespace SpaceInvaders
             }
             return false;
         }
+
+
 
         protected abstract void OnCollision(Missile m, int numberOfPixelsInCollision);
 

@@ -12,8 +12,19 @@ namespace SpaceInvaders
     abstract class GameObject
     {
 
-        public GameObject()
+        public GameObject(Side s)
         {
+            this.side = s;
+        }
+
+        public enum Side {
+            Ally,
+            Enemy,
+            Neutral
+        }
+        public Side side {
+            get;
+            set;
         }
        
         /// <summary>

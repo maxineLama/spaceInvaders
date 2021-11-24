@@ -14,8 +14,9 @@ namespace SpaceInvaders
     {
         public Missile missile;
         public double speedPixelPerSecond;
+       
 
-        public SpaceShip(Vecteur2D pos, int lives, Bitmap img)
+        public SpaceShip(Vecteur2D pos, int lives, Bitmap img):base(Side.Neutral)
         {
             Position = pos;
             Lives = lives;
@@ -30,6 +31,16 @@ namespace SpaceInvaders
                 Bitmap img2 = SpaceInvaders.Properties.Resources.shoot1;
                 Vecteur2D pos = new Vecteur2D(Position.x + Image.Width / 2 - 1, Position.y - Image.Height ) ;
                 missile = new Missile(pos, 1, img2);
+                if (missile == gameInstance.playerSpaceShip.missile)
+                {
+                    missile.side = Side.Ally;
+                    
+                }
+                else
+                {
+                    missile.side = Side.Enemy;
+                    missile.Position.y += gameInstance.playerSpaceShip.Image.Height * 2 + 1;
+                }
                 gameInstance.gameObjects.Add(missile);
                 gameInstance.Update(deltaT);
 

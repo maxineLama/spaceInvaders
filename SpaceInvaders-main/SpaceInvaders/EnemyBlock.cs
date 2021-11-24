@@ -25,7 +25,10 @@ namespace SpaceInvaders
         double PositionY;
         int direction;
         double vitesse;
-        public EnemyBlock(Vecteur2D pos, int baseWidth)
+        double randomShootProbability;
+        Random random;
+
+        public EnemyBlock(Vecteur2D pos, int baseWidth):base(Side.Enemy)
         {
             this.Position = pos;
             this.PositionY = Position.y;
@@ -34,9 +37,11 @@ namespace SpaceInvaders
             size = new Size(0, 0);
             direction = 1;
             vitesse = 0.1;
+            randomShootProbability = 1;
+            random = new Random(100000000);
             
         }
-        public void AddLine(int nbShips, int nbLives, Bitmap shipImage)
+        public void AddLine(int nbShips, int nbLives, Bitmap shipImage )
         {
             
 
@@ -44,7 +49,8 @@ namespace SpaceInvaders
             {
                 Vecteur2D p = new Vecteur2D((Position.x+(baseWidth/nbShips)/2*i ), PositionY );
                 Bitmap b = shipImage;
-                SpaceShip sp = new SpaceShip(p, nbLives,b);
+                SpaceShip sp = new SpaceShip(p, nbLives,b );
+                sp.side = Side.Enemy;
                 enemyShips.Add(sp);
                
             }
@@ -78,7 +84,7 @@ namespace SpaceInvaders
 
                 if (sp.Collision(m) )
                 {
-                    Console.WriteLine(sp.ToString()+" est mort : " +sp.Lives);
+                    
                     sp.Lives = 0;
                     m.Lives = 0;
                     
@@ -116,19 +122,36 @@ namespace SpaceInvaders
         {
             if (IsAlive())
             {
-
-                go(direction, vitesse);
-
-                if (enemyShips.Last().Position.x >= 560 || enemyShips.First().Position.x <= 10)
+                foreach (SpaceShip sp in enemyShips)
                 {
-                    Console.WriteLine("touche");
+                    double r = random.NextDouble();
+                    if (r <= randomShootProbability * deltaT && sp.IsAlive())
+                    {
+                        sp.shoot(gameInstance, deltaT);
+                        if (sp.missile != null && sp.missile.IsAlive() && sp.IsAlive())
+                        {
+                            sp.missile.Update(gameInstance,deltaT);
+                        }
+                    }
+                     
+                        
+                }
+
+                
+                go(direction, vitesse);
+                
+                 if (enemyShips.Last().Position.x >= 560 || enemyShips.First().Position.x <= 10)
+                {
+                    
                     goDown();
                     direction *= -1;
-                    vitesse += 0.2;
+                    vitesse += 0.02;
+                    randomShootProbability+=0.2;
                 }
 
                 foreach (GameObject obj in gameInstance.gameObjects.ToList())
                 {
+
                     if (obj is Missile)
                     {
                         Missile m = (Missile)obj;

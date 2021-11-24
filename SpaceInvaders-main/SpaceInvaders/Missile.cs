@@ -20,14 +20,15 @@ namespace SpaceInvaders
         }
 
 
-        public Missile(Vecteur2D pos, int lives, Bitmap img)
+        public Missile(Vecteur2D pos, int lives, Bitmap img):base(Side.Neutral)
         {
             Position = pos;
             Lives = lives;
             Image = img;
             Vitesse = 820;
         }
-      
+       
+
 
         public override void Draw(Game gameInstance, Graphics graphics)
         {
@@ -54,29 +55,46 @@ namespace SpaceInvaders
 
             }
 
-           
-                foreach (GameObject obj in gameInstance.gameObjects.ToList())
+
+            foreach (GameObject obj in gameInstance.gameObjects.ToList())
+            {
+                if (obj is Bunker)
                 {
 
-                    if (obj.Collision(this) && obj is Bunker)
+                    if (obj.Collision(this))
                     {
-
                         Bunker b = (Bunker)obj;
+                        Console.WriteLine(this.side + " missile " + b.side);
                         b.CollisionParPixel(this);
-
                         break;
-
                     }
+
                     if (obj is EnemyBlock)
                     {
                         EnemyBlock e = (EnemyBlock)obj;
                         e.Collision(this);
                         break;
+
+                    }
+                    if (obj is PlayerSpaceship)
+                    {
+                        PlayerSpaceship e = (PlayerSpaceship)obj;
+                        e.Collision(this);
+                        break;
+
                     }
                 }
+            }
             if (IsAlive())
             {
-                Position.y -= Vitesse * deltaT;
+                if (this.side==Side.Ally)
+                {
+                    Position.y -= Vitesse * deltaT;
+                }
+                else
+                {
+                    Position.y += Vitesse * deltaT;
+                }
 
             }
 

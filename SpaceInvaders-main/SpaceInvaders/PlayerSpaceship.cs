@@ -9,9 +9,19 @@ namespace SpaceInvaders
     {
         public PlayerSpaceship(Vecteur2D pos, int lives, Bitmap img): base(pos, lives, img)
         {
+            base.side = Side.Ally;
             
         }
-
+        public override void Draw(Game gameInstance, Graphics graphics)
+        {
+            base.Draw(gameInstance, graphics);
+            Font drawFont = new Font("Arial", 12);
+            SolidBrush drawBrush = new SolidBrush(Color.Black);
+            float x = 5f;
+            float y = 0f;
+           
+             graphics.DrawString("Vie(s) : "+Lives, drawFont, drawBrush, x, y);
+            }
         public override void Update(Game gameInstance, double deltaT)
         {
 
@@ -32,13 +42,16 @@ namespace SpaceInvaders
             }
             else if (gameInstance.keyPressed.Contains(System.Windows.Forms.Keys.Space))
             {
-
-                shoot(gameInstance, deltaT);
+                if (this.IsAlive())
+                {
+                    shoot(gameInstance, deltaT);
+                }
 
 
 
             }
 
         }
+
     }
 }
