@@ -60,14 +60,24 @@ namespace SpaceInvaders
             {
                 if (obj is Bunker)
                 {
+                    Bunker b = (Bunker)obj;
 
-                    if (obj.Collision(this))
+                    if (b.Collision(this))
                     {
-                        Bunker b = (Bunker)obj;
-                        Console.WriteLine(this.side + " missile " + b.side);
-                        b.CollisionParPixel(this);
+                        if (this == gameInstance.playerSpaceShip.missile)
+                        {
+                            Console.WriteLine(this.side + " missile " + b.side);
+                            b.CollisionParPixelPlayer(this);
+                        }
+                        else
+                        {
+                            Console.WriteLine(this.side + " missile " + b.side);
+                            b.CollisionParPixel(this);
+                        }
                         break;
                     }
+                  
+
 
                     if (obj is EnemyBlock)
                     {

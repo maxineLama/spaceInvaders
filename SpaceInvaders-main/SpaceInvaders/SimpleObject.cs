@@ -66,6 +66,10 @@ namespace SpaceInvaders
                 {
                     Console.WriteLine("missile " + m.side + " obj " + this.side);
                     m.OnCollision(m, nbCol);
+                    if (m.side == Side.Ally)
+                    {
+                        return true;
+                    }
 
                     return false;
                 }

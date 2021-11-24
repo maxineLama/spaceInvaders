@@ -177,7 +177,7 @@ namespace SpaceInvaders
             float y = 255f;
             if (state == GameState.Pause)
             {
-               
+                
                 g.DrawString("PAUSE", defaultFont,drawBrush,x,y);
             }
             else
