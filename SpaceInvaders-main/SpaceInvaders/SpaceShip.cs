@@ -71,7 +71,7 @@ namespace SpaceInvaders
         protected override void OnCollision(Missile m, int numberOfPixelsInCollision)
         {
              
-                Lives -= numberOfPixelsInCollision;
+                this.Lives -= numberOfPixelsInCollision;
            
                 if  (missile!=null){
                     missile.Lives = 0;

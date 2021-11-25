@@ -9,7 +9,7 @@ namespace SpaceInvaders
     {
         public PlayerSpaceship(Vecteur2D pos, int lives, Bitmap img): base(pos, lives, img)
         {
-            base.side = Side.Ally;
+            this.side = Side.Ally;
             
         }
         public override void Draw(Game gameInstance, Graphics graphics)
@@ -20,37 +20,44 @@ namespace SpaceInvaders
             float x = 5f;
             float y = 0f;
            
-             graphics.DrawString("Vie(s) : "+Lives, drawFont, drawBrush, x, y);
+             graphics.DrawString("Vie(s) : "+Lives/35, drawFont, drawBrush, x, y);
             }
         public override void Update(Game gameInstance, double deltaT)
         {
-
-            if (gameInstance.keyPressed.Contains(System.Windows.Forms.Keys.Right))
+            if (IsAlive())
             {
-                if (gameInstance.playerSpaceShip.Position.x <= gameInstance.gameSize.Width - gameInstance.playerSpaceShip.Image.Width)
+
+                if (gameInstance.keyPressed.Contains(System.Windows.Forms.Keys.Right))
                 {
-                    gameInstance.playerSpaceShip.Position.x += speedPixelPerSecond * deltaT;
-                }
+                    if (gameInstance.playerSpaceShip.Position.x <= gameInstance.gameSize.Width - gameInstance.playerSpaceShip.Image.Width)
+                    {
+                        gameInstance.playerSpaceShip.Position.x += speedPixelPerSecond * deltaT;
+                    }
 
-            }
-            else if (gameInstance.keyPressed.Contains(System.Windows.Forms.Keys.Left))
-            {
-                if (gameInstance.playerSpaceShip.Position.x - 1 > 0)
+                }
+                else if (gameInstance.keyPressed.Contains(System.Windows.Forms.Keys.Left))
                 {
-                    gameInstance.playerSpaceShip.Position.x -= speedPixelPerSecond * deltaT;
+                    if (gameInstance.playerSpaceShip.Position.x - 1 > 0)
+                    {
+                        gameInstance.playerSpaceShip.Position.x -= speedPixelPerSecond * deltaT;
+                    }
                 }
-            }
-            else if (gameInstance.keyPressed.Contains(System.Windows.Forms.Keys.Space))
-            {
-                if (this.IsAlive())
+                else if (gameInstance.keyPressed.Contains(System.Windows.Forms.Keys.Space))
                 {
-                    shoot(gameInstance, deltaT);
+                    if (this.IsAlive())
+                    {
+                        shoot(gameInstance, deltaT);
+                    }
+
+
+
                 }
-
-
-
             }
 
+        }
+        protected override void OnCollision(Missile m, int numberOfPixelsInCollision)
+        {
+            base.OnCollision(m,numberOfPixelsInCollision);
         }
 
     }

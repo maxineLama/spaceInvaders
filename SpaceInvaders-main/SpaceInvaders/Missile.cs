@@ -58,6 +58,10 @@ namespace SpaceInvaders
 
             foreach (GameObject obj in gameInstance.gameObjects.ToList())
             {
+                PlayerSpaceship p = (PlayerSpaceship)gameInstance.playerSpaceShip;
+
+                p.Collision(this);
+
                 if (obj is Bunker)
                 {
                     Bunker b = (Bunker)obj;
@@ -68,7 +72,8 @@ namespace SpaceInvaders
                         {
                             Console.WriteLine(this.side + " missile " + b.side);
                             b.CollisionParPixelPlayer(this);
-                        }
+                        } 
+                        
                         else
                         {
                             Console.WriteLine(this.side + " missile " + b.side);
@@ -76,8 +81,14 @@ namespace SpaceInvaders
                         }
                         break;
                     }
-                  
+                     
+                    
+                       
 
+                    
+
+                }
+               
 
                     if (obj is EnemyBlock)
                     {
@@ -86,14 +97,14 @@ namespace SpaceInvaders
                         break;
 
                     }
-                    if (obj is PlayerSpaceship)
-                    {
-                        PlayerSpaceship e = (PlayerSpaceship)obj;
-                        e.Collision(this);
-                        break;
 
-                    }
-                }
+    
+                   
+
+               
+                
+                 
+                
             }
             if (IsAlive())
             {

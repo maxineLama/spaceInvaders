@@ -73,7 +73,7 @@ namespace SpaceInvaders
 
                     return false;
                 }
-                OnCollision(m, nbCol);
+                this.OnCollision(m, nbCol);
                 Console.WriteLine("missile " + m.side + " obj " + this.side);
                 return true;
             }
@@ -94,7 +94,7 @@ namespace SpaceInvaders
 
         public override bool IsAlive()
         {
-            if (Lives > 0 && this != null)
+            if (Lives > 0)
             {
                 return true;
             }

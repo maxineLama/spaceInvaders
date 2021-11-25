@@ -41,7 +41,10 @@ namespace SpaceInvaders
         public enum GameState
         {
             Play,
-            Pause
+            Pause,
+            Win,
+            Lost
+
         }
         public GameState state = GameState.Play;
         public Bunker b1;
@@ -105,7 +108,7 @@ namespace SpaceInvaders
         {
             Vecteur2D pos = new Vecteur2D(265, 550);
             Bitmap img = SpaceInvaders.Properties.Resources.ship3;
-            this.playerSpaceShip = new PlayerSpaceship(pos, 3, img);
+            this.playerSpaceShip = new PlayerSpaceship(pos, 175, img);
 
             this.gameSize = gameSize;
             gameObjects.Add(playerSpaceShip);
@@ -179,6 +182,13 @@ namespace SpaceInvaders
             {
                 
                 g.DrawString("PAUSE", defaultFont,drawBrush,x,y);
+            }else if (state == GameState.Lost)
+            {
+                g.DrawString("LOSER", defaultFont, drawBrush, x, y);
+            }
+            else if (state == GameState.Win)
+            {
+                g.DrawString("WINNER", defaultFont, drawBrush, x, y);
             }
             else
             {
@@ -220,6 +230,13 @@ namespace SpaceInvaders
                 // AddNewGameObject(newObject);
                 // release key space (no autofire)
                 //ReleaseKey(Keys.Space);
+            }
+            if (!(playerSpaceShip.IsAlive()) && state==GameState.Play)
+            {
+                state = GameState.Lost;
+            }else if(!(enemies.IsAlive())&& state == GameState.Play)
+            {
+                state = GameState.Win;
             }
 
             // update each game object
