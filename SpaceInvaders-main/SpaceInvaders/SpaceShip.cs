@@ -28,7 +28,7 @@ namespace SpaceInvaders
         }
         public void shoot(Game gameInstance, double deltaT)
         {
-            if (missile == null || !missile.IsAlive())
+            if (missile == null || !missile.IsAlive() && this.IsAlive())
             {
                 Bitmap img2 = SpaceInvaders.Properties.Resources.shoot1;
                 Vecteur2D pos = new Vecteur2D(Position.x + Image.Width / 2 - 1, Position.y - Image.Height ) ;
@@ -62,7 +62,7 @@ namespace SpaceInvaders
 
         public override void Update(Game gameInstance, double deltaT)
         {
-
+            
 
         }
         public override bool Collision(Missile m)

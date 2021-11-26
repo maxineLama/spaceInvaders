@@ -12,7 +12,7 @@ namespace SpaceInvaders
         private HashSet<SpaceShip> enemyShips;
         private int baseWidth;
 
-        Size size
+        public Size size
         {
             get;
             set;
@@ -37,7 +37,7 @@ namespace SpaceInvaders
             size = new Size(0, 0);
             direction = 1;
             vitesse = 0.1;
-            randomShootProbability = 0.2;
+            randomShootProbability = 0.1;
             random = new Random(100000000);
             
         }
@@ -54,6 +54,7 @@ namespace SpaceInvaders
                 enemyShips.Add(sp);
                
             }
+            UpdateSize();
             PositionY += shipImage.Height + 2;
 
         }
@@ -122,6 +123,11 @@ namespace SpaceInvaders
         {
             if (IsAlive() && gameInstance.state == Game.GameState.Play)
             {
+                if (size.Height == gameInstance.b1.Position.y)
+                {
+                    gameInstance.state = Game.GameState.Lost;
+                    return;
+                }
                 foreach (SpaceShip sp in enemyShips)
                 {
                     double r = random.NextDouble();
@@ -146,7 +152,7 @@ namespace SpaceInvaders
                     goDown();
                     direction *= -1;
                     vitesse += 0.02;
-                    randomShootProbability+=0.2;
+                    randomShootProbability+=0.1;
                 }
 
                 foreach (GameObject obj in gameInstance.gameObjects.ToList())

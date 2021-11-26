@@ -17,7 +17,7 @@ namespace SpaceInvaders
            
            
         }
-        static int score
+        public static int score
         {
             get;
             set;

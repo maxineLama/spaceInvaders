@@ -70,7 +70,7 @@ namespace SpaceInvaders
 
                         Missile m = (Missile)gameInstance.playerSpaceShip.missile;
                         m.Collision(this);
-                        break;
+                       
 
 
                     }
@@ -95,20 +95,20 @@ namespace SpaceInvaders
                             break;
                         }
 
+
+
+
+                        if (obj is EnemyBlock)
+                        {
+
+                            EnemyBlock e = (EnemyBlock)obj;
+                            e.Collision(this);
+                            break;
+
+                        }
+
+
                     }
-
-
-                    if (obj is EnemyBlock)
-                    {
-                        
-                        EnemyBlock e = (EnemyBlock)obj;
-                        e.Collision(this);
-                        break;
-
-                    }
-
-
-
 
 
                 }
