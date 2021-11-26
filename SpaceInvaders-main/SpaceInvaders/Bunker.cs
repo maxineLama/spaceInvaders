@@ -59,7 +59,7 @@ namespace SpaceInvaders
 			if (base.Collision(m))
 			{
 				int x = 0, y = 0;
-				int etat = 0;
+		
 				for (int i = 0; i < m.Image.Width; i++)
 				{
 					for (int j = 0; j < m.Image.Height; j++)

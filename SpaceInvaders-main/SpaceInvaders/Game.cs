@@ -108,7 +108,7 @@ namespace SpaceInvaders
         {
             Vecteur2D pos = new Vecteur2D(265, 550);
             Bitmap img = SpaceInvaders.Properties.Resources.ship3;
-            this.playerSpaceShip = new PlayerSpaceship(pos, 175, img);
+            this.playerSpaceShip = new PlayerSpaceship(pos, 5, img); //175 vies
 
             this.gameSize = gameSize;
             gameObjects.Add(playerSpaceShip);
@@ -176,19 +176,22 @@ namespace SpaceInvaders
         {
             Font drawFont = new Font("Arial", 16);
             SolidBrush drawBrush = new SolidBrush(Color.Black);
-            float x = 255f;
+            float x = 230f;
             float y = 255f;
             if (state == GameState.Pause)
             {
                 
                 g.DrawString("PAUSE", defaultFont,drawBrush,x,y);
-            }else if (state == GameState.Lost)
+               
+
+            }
+            else if (state == GameState.Lost)
             {
-                g.DrawString("LOSER", defaultFont, drawBrush, x, y);
+                g.DrawString("LOSER \n \"Space\" for restart", defaultFont, drawBrush, x, y);
             }
             else if (state == GameState.Win)
             {
-                g.DrawString("WINNER", defaultFont, drawBrush, x, y);
+                g.DrawString("WINNER \n \"Space\" for restart", defaultFont, drawBrush, x, y);
             }
             else
             {
@@ -208,21 +211,47 @@ namespace SpaceInvaders
             pendingNewGameObjects.Clear();
 
 
+            if( state == GameState.Win || state == GameState.Lost)
+            {
+                if (keyPressed.Contains(Keys.Space))
+                {
+
+                    Console.WriteLine("restart");
+
+
+                    Size g = gameSize;
+                    Application.Restart(); 
+                    Environment.Exit(0);
+                    
+                    CreateGame(g);
+
+
+                }
+                ReleaseKey(Keys.Space);
+            }
+
+
+
+    
+
             // if space is pressed
             if (keyPressed.Contains(Keys.P))
             {
                 if (state == GameState.Play)
                 {
-
                     state = GameState.Pause;
-                   
+                    
+
 
                 }
+
                 else
                 {
-                    state = GameState.Play;
                    
+                    state = GameState.Play;
+                    
                 }
+                
                 ReleaseKey(Keys.P);
                 // create new BalleQuiTombe
                 //GameObject newObject = new BalleQuiTombe(gameSize.Width / 2, 0);
@@ -237,6 +266,7 @@ namespace SpaceInvaders
             }else if(!(enemies.IsAlive())&& state == GameState.Play)
             {
                 state = GameState.Win;
+                
             }
 
             // update each game object

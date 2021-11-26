@@ -6,3 +6,4 @@ C:\Users\mlama\Desktop\Esiee\Projet_Poo\SpaceInvaders-main\SpaceInvaders\bin\Deb
 C:\Users\mlama\Desktop\Esiee\Projet_Poo\SpaceInvaders-main\SpaceInvaders\bin\Debug\SpaceInvaders.pdb
 C:\Users\mlama\Desktop\Esiee\Projet_Poo\SpaceInvaders-main\SpaceInvaders\obj\x86\Debug\SpaceInvaders.exe
 C:\Users\mlama\Desktop\Esiee\Projet_Poo\SpaceInvaders-main\SpaceInvaders\obj\x86\Debug\SpaceInvaders.pdb
+C:\Users\mlama\Desktop\Esiee\Projet_Poo\SpaceInvaders-main\SpaceInvaders\obj\x86\Debug\SpaceInvaders.csproj.AssemblyReference.cache

@@ -7,11 +7,23 @@ namespace SpaceInvaders
 {
     class PlayerSpaceship : SpaceShip
     {
+
+        
+       
         public PlayerSpaceship(Vecteur2D pos, int lives, Bitmap img): base(pos, lives, img)
         {
+            score = 0;
             this.side = Side.Ally;
-            
+           
+           
         }
+        static int score
+        {
+            get;
+            set;
+        }
+       
+       
         public override void Draw(Game gameInstance, Graphics graphics)
         {
             base.Draw(gameInstance, graphics);
@@ -20,11 +32,15 @@ namespace SpaceInvaders
             float x = 5f;
             float y = 0f;
            
-             graphics.DrawString("Vie(s) : "+Lives/35, drawFont, drawBrush, x, y);
-            }
+             graphics.DrawString("Vie(s) : "+(Lives), drawFont, drawBrush, x, y);
+
+            float xScore = 500f;
+            float yScore= 0f;
+            graphics.DrawString("Score : " + score, drawFont, drawBrush, xScore, yScore);
+        }
         public override void Update(Game gameInstance, double deltaT)
         {
-            if (IsAlive())
+            if (IsAlive()&& gameInstance.state==Game.GameState.Play)
             {
 
                 if (gameInstance.keyPressed.Contains(System.Windows.Forms.Keys.Right))
@@ -55,9 +71,15 @@ namespace SpaceInvaders
             }
 
         }
+       public static void Score()
+       {
+            score+=100;
+            
+        }
         protected override void OnCollision(Missile m, int numberOfPixelsInCollision)
         {
-            base.OnCollision(m,numberOfPixelsInCollision);
+            base.OnCollision(m, numberOfPixelsInCollision);
+           
         }
 
     }

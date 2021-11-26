@@ -25,7 +25,7 @@ namespace SpaceInvaders
             Position = pos;
             Lives = lives;
             Image = img;
-            Vitesse = 820;
+            Vitesse = 220;
         }
        
 
@@ -46,86 +46,102 @@ namespace SpaceInvaders
         
         public override void Update(Game gameInstance, double deltaT)
         {
-            if (Position.y < 0 || Position.y > gameInstance.gameSize.Height)
+
+            
+            if ( gameInstance.state == Game.GameState.Play) 
             {
-                Lives = 0;
-                return;
-
-
-
-            }
-
-
-            foreach (GameObject obj in gameInstance.gameObjects.ToList())
-            {
-                PlayerSpaceship p = (PlayerSpaceship)gameInstance.playerSpaceShip;
-
-                p.Collision(this);
-
-                if (obj is Bunker)
+                if (Position.y < 0 || Position.y > gameInstance.gameSize.Height)
                 {
-                    Bunker b = (Bunker)obj;
+                    Lives = 0;
+                    return;
 
-                    if (b.Collision(this))
-                    {
-                        if (this == gameInstance.playerSpaceShip.missile)
-                        {
-                            Console.WriteLine(this.side + " missile " + b.side);
-                            b.CollisionParPixelPlayer(this);
-                        } 
-                        
-                        else
-                        {
-                            Console.WriteLine(this.side + " missile " + b.side);
-                            b.CollisionParPixel(this);
-                        }
-                        break;
-                    }
-                     
-                    
-                       
 
-                    
 
                 }
-               
+
+
+                foreach (GameObject obj in gameInstance.gameObjects.ToList())
+                {
+                    PlayerSpaceship p = (PlayerSpaceship)gameInstance.playerSpaceShip;
+                    p.Collision(this);
+                   
+                    if ((Missile)gameInstance.playerSpaceShip.missile != null && this != (Missile)gameInstance.playerSpaceShip.missile)
+                    {
+
+                        Missile m = (Missile)gameInstance.playerSpaceShip.missile;
+                        m.Collision(this);
+                        break;
+
+
+                    }
+
+                    if (obj is Bunker)
+                    {
+                        Bunker b = (Bunker)obj;
+
+                        if (b.Collision(this))
+                        {
+                            if (this == gameInstance.playerSpaceShip.missile)
+                            {
+                                //Console.WriteLine(this.side + " missile " + b.side);
+                                b.CollisionParPixelPlayer(this);
+                            }
+
+                            else
+                            {
+                                //Console.WriteLine(this.side + " missile " + b.side);
+                                b.CollisionParPixel(this);
+                            }
+                            break;
+                        }
+
+                    }
+
 
                     if (obj is EnemyBlock)
                     {
+                        
                         EnemyBlock e = (EnemyBlock)obj;
                         e.Collision(this);
                         break;
 
                     }
 
-    
+
+
+
+
+                }
+                 if (IsAlive())
+                 {
+                      if (this.side == Side.Ally)
+                      {
+                           Position.y -= Vitesse * deltaT;
+                      }
+                      else
+                      {
+                           Position.y += Vitesse * deltaT;
+                      }
+
                    
-
-               
-                
-                 
-                
+                  }
             }
-            if (IsAlive())
-            {
-                if (this.side==Side.Ally)
-                {
-                    Position.y -= Vitesse * deltaT;
-                }
-                else
-                {
-                    Position.y += Vitesse * deltaT;
-                }
-
-            }
+            
 
         }
+
+
+
         protected override void OnCollision(Missile m, int numberOfPixelsInCollision)
         {
             if (m != null || !(m.IsAlive()))
             {
+                m.Lives = 0 ;
                 Lives = 0;
+
             }
+           
+            
         }
     }
 }

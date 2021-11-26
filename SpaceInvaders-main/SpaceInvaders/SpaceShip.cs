@@ -14,7 +14,8 @@ namespace SpaceInvaders
     {
         public Missile missile;
         public double speedPixelPerSecond;
-       
+
+      
 
         public SpaceShip(Vecteur2D pos, int lives, Bitmap img):base(Side.Neutral)
         {
@@ -23,6 +24,7 @@ namespace SpaceInvaders
             Image = img;
             missile = null;
             speedPixelPerSecond = 400;
+           
         }
         public void shoot(Game gameInstance, double deltaT)
         {
@@ -70,12 +72,12 @@ namespace SpaceInvaders
 
         protected override void OnCollision(Missile m, int numberOfPixelsInCollision)
         {
-             
-                this.Lives -= numberOfPixelsInCollision;
            
-                if  (missile!=null){
-                    missile.Lives = 0;
-                }
+           Lives -= 1; 
+            m.Lives =0 ;
+                
+          
+                
             
             
         

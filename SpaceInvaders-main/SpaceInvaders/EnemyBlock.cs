@@ -37,7 +37,7 @@ namespace SpaceInvaders
             size = new Size(0, 0);
             direction = 1;
             vitesse = 0.1;
-            randomShootProbability = 1;
+            randomShootProbability = 0.2;
             random = new Random(100000000);
             
         }
@@ -84,7 +84,7 @@ namespace SpaceInvaders
 
                 if (sp.Collision(m) )
                 {
-                    
+                    PlayerSpaceship.Score();
                     sp.Lives = 0;
                     m.Lives = 0;
                     
@@ -120,12 +120,12 @@ namespace SpaceInvaders
 
         public override void Update(Game gameInstance, double deltaT)
         {
-            if (IsAlive())
+            if (IsAlive() && gameInstance.state == Game.GameState.Play)
             {
                 foreach (SpaceShip sp in enemyShips)
                 {
                     double r = random.NextDouble();
-                    if (r <= randomShootProbability * deltaT && sp.IsAlive())
+                    if (r <= randomShootProbability * deltaT )
                     {
                         sp.shoot(gameInstance, deltaT);
                         if (sp.missile != null && sp.missile.IsAlive() && sp.IsAlive())
@@ -156,6 +156,7 @@ namespace SpaceInvaders
                     {
                         Missile m = (Missile)obj;
                         Collision(m);
+                       
                     }
                 }
 

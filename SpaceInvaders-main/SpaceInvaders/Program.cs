@@ -11,7 +11,7 @@ namespace SpaceInvaders
         /// Point d'entrée principal de l'application.
         /// </summary>
         [STAThread]
-        static void Main()
+        public static void Main()
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
