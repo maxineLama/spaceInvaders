@@ -1,0 +1,4 @@
+C:\Users\mlama\Desktop\Esiee\Projet_Poo\SpaceInvaders-main\SpaceInvaders\obj\x86\Release\SpaceInvaders.GameForm.resources
+C:\Users\mlama\Desktop\Esiee\Projet_Poo\SpaceInvaders-main\SpaceInvaders\obj\x86\Release\SpaceInvaders.Properties.Resources.resources
+C:\Users\mlama\Desktop\Esiee\Projet_Poo\SpaceInvaders-main\SpaceInvaders\obj\x86\Release\SpaceInvaders.csproj.GenerateResource.cache
+C:\Users\mlama\Desktop\Esiee\Projet_Poo\SpaceInvaders-main\SpaceInvaders\obj\x86\Release\SpaceInvaders.csproj.CoreCompileInputs.cache
