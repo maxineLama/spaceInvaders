@@ -20,7 +20,7 @@ namespace SpaceInvaders
         /// Set of all game objects currently in the game
         /// </summary>
         public HashSet<GameObject> gameObjects = new HashSet<GameObject>();
-        public static SoundPlayer player = new SoundPlayer();
+       
         
          
         
@@ -50,10 +50,11 @@ namespace SpaceInvaders
             Play,
             Pause,
             Win,
-            Lost
+            Lost,
+            Menu
 
         }
-        public GameState state = GameState.Play;
+        public GameState state = GameState.Menu;
         public Bunker b1;
         public Bunker b2;
         public Bunker b3;
@@ -71,7 +72,7 @@ namespace SpaceInvaders
         /// State of the keyboard
         /// </summary>
         public HashSet<Keys> keyPressed = new HashSet<Keys>();
-
+        public static SoundPlayer player = new SoundPlayer();
         #endregion
 
         #region static fields (helpers)
@@ -103,10 +104,10 @@ namespace SpaceInvaders
         {
             if (game == null)
             {
+
                 game = new Game(gameSize);
                 player.Stream = SpaceInvaders.Properties.Resources.soundtrack;
-                Console.WriteLine("play");
-                player.Load();
+
                 player.Play();
             }
 
@@ -142,7 +143,7 @@ namespace SpaceInvaders
             gameObjects.Add(b2);
             gameObjects.Add(b3);
 
-            Vecteur2D posEnemies = new Vecteur2D(15,20);
+            Vecteur2D posEnemies = new Vecteur2D(15,40);
             enemies = new EnemyBlock(posEnemies, gameSize.Width);
 
             Bitmap imgEnemies = SpaceInvaders.Properties.Resources.ship1;
@@ -197,6 +198,7 @@ namespace SpaceInvaders
             {
                 
                 g.DrawString("PAUSE", defaultFont,drawBrush,x,y);
+              
                
 
             }
@@ -207,6 +209,11 @@ namespace SpaceInvaders
             else if (state == GameState.Win)
             {
                 g.DrawString("WINNER \n \"Space\" for restart", defaultFont, drawBrush, x, y);
+            }
+            else if (state == GameState.Menu)
+            {
+                g.DrawString("space Invaders \n LAMA Maxine", defaultFont, drawBrush, x, y);
+                g.DrawString("Press \' G\' for play the game", defaultFont, drawBrush, x, y+60);
             }
             else
             {
@@ -235,10 +242,24 @@ namespace SpaceInvaders
 
 
                     Size g = gameSize;
+                    player.Stop();
+
                     Application.Restart(); 
                     Environment.Exit(0);
                     
                     CreateGame(g);
+
+
+                }
+                ReleaseKey(Keys.Space);
+            }
+
+             if( state == GameState.Menu)
+            {
+                if (keyPressed.Contains(Keys.G))
+                {
+
+                    state = GameState.Play;
 
 
                 }

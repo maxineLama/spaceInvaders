@@ -221,6 +221,10 @@ namespace SpaceInvaders
                        
                     }
                 }
+                if (size.Height == 479) //si le bloc ennemy atteint les bunker
+                {
+                    gameInstance.state = Game.GameState.Lost; 
+                }
 
 
             }
@@ -251,6 +255,7 @@ namespace SpaceInvaders
             {
                 sp.Position.y += 20;
             }
+            
         }
         
     }

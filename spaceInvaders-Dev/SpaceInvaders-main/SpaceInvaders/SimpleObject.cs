@@ -89,6 +89,8 @@ namespace SpaceInvaders
             float PositionY = (float)Position.y;
 
             graphics.DrawImage(Image, PositionX, PositionY, Image.Width, Image.Height);
+            Pen p = new Pen(Color.Black);
+            graphics.DrawLine(p, 0, 30, (float)gameInstance.gameSize.Width, 30);
 
         }
 
